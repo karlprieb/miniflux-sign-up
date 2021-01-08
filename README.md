@@ -1,2 +1,1 @@
-# miniflux-sign-up
-Simple sign up form for Miniflux v2
+# Sign Up page for Miniflux v2
