@@ -17,13 +17,15 @@ type minifluxSuccessResponse = {
   entries_per_page: number;
   keyboard_shortcuts: boolean;
   show_reading_time: boolean;
-  extra: any;
+  extra: string;
   entry_swipe: boolean;
 };
 
-type minifluxErrorResponse = {
+export type minifluxErrorResponse = {
   error_message: string;
 };
+
+type minifluxResponse = minifluxSuccessResponse | minifluxErrorResponse;
 
 export const createUserData = (formData: string): userData => {
   return formData.split("&").reduce((acc, data) => ({
@@ -34,7 +36,7 @@ export const createUserData = (formData: string): userData => {
 
 export const createUser = (
   formData: string,
-): Promise<minifluxSuccessResponse | minifluxErrorResponse> => {
+): Promise<minifluxSuccessResponse | minifluxResponse> => {
   const userData = createUserData(formData);
 
   const create = fetch(`${MINIFLUX_HOST}/v1/users`, {

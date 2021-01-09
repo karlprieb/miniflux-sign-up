@@ -7,21 +7,19 @@ import {
   renderForm,
   renderInvalidRouteError,
 } from "./responses.ts";
-import { createUser } from "./createUser.ts";
+import { createUser, minifluxErrorResponse } from "./createUser.ts";
 
-const readPostBody = async (rawBody: any): Promise<string> => {
+const readPostBody = async (rawBody: Deno.Reader): Promise<string> => {
   const raw = await Deno.readAll(rawBody);
   return new TextDecoder().decode(raw);
 };
 
-const handleForm = async (req: any): Promise<void> => {
+const handleForm = async (req: HTTP.ServerRequest): Promise<void> => {
   const body = await readPostBody(req.body);
   const createResponse = await createUser(body);
 
-  const { error_message } = createResponse;
-
-  if (error_message) {
-    return renderForm(req, error_message);
+  if ("error_message" in createResponse) {
+    return renderForm(req, createResponse.error_message);
   }
 
   return MINIFLUX_HOST

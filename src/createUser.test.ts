@@ -8,6 +8,7 @@ Deno.test("createUserData", (): void => {
   const expected = {
     username: "test",
     password: "passTest",
+    // deno-lint-ignore camelcase
     is_admin: false,
   };
   const userData = createUserData(formData);
