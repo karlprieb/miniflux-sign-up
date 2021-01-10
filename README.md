@@ -12,7 +12,20 @@ To run the webserver:
 MINIFLUX_HOST=<your-miniflux-server-url> AUTH_KEY=<your-api-key> make run
 ```
 You should have now a webserver running on `http://localhost:8000`.
-You can pass `HOST` and `PORT` environment variables to set it.
+You can pass `HOST` and `BASE_URL` environment variables to set it.
+
+### Using Docker
+You can build the container with:
+```
+docker build -t app .
+```
+and run passing the environment variables that you need:
+```
+docker run -it --init -p 8000:8000 -e BASE_URL=<url-for-miniflux-sign-up> -e MINIFLUX_HOST=<your-miniflux-server-url> -e AUTH_KEY=<your-api-key> app
+```
+
+### Using docker-compose
+Just set your environment variables on `docker-compose.yml` run `docker-compose up` and you're done :)
 
 ## Development
 For development you can run:

@@ -1,13 +1,13 @@
 import { log } from "./log.ts";
 import { HTTP } from "./deps.ts";
-import { HOST, MINIFLUX_HOST, PORT } from "./env.ts";
+import { BASE_URL, HOST, MINIFLUX_HOST } from "./env.ts";
 import {
   redirectTo,
   renderError,
   renderForm,
   renderInvalidRouteError,
 } from "./responses.ts";
-import { createUser, minifluxErrorResponse } from "./createUser.ts";
+import { createUser } from "./createUser.ts";
 
 const readPostBody = async (rawBody: Deno.Reader): Promise<string> => {
   const raw = await Deno.readAll(rawBody);
@@ -28,9 +28,10 @@ const handleForm = async (req: HTTP.ServerRequest): Promise<void> => {
 };
 
 export const startServer = async (): Promise<void> => {
-  const server = HTTP.serve({ hostname: HOST, port: PORT });
+  const server = HTTP.serve({ hostname: HOST, port: 8000 });
+  const serverUrl = BASE_URL ?? `http://${HOST}:8000`;
 
-  log.info(`Server running on http://${HOST}:${PORT}`);
+  log.info(`Server running on ${serverUrl}`);
 
   for await (const req of server) {
     const { url, method } = req;

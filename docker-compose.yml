@@ -1,0 +1,14 @@
+---
+version: "2.1"
+services:
+  miniflux-sign-up:
+    build: .
+    container_name: miniflux-sign-up
+    environment:
+      - MINIFLUX_HOST=adfs
+      - AUTH_KEY=asdfsd
+      # - BASE_URL= optional
+      # - HOST= optional
+    ports:
+      - 8000:8000
+    restart: unless-stopped
