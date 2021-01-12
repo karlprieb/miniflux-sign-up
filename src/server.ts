@@ -34,21 +34,16 @@ export const startServer = async (): Promise<void> => {
   log.info(`Server running on ${serverUrl}`);
 
   for await (const req of server) {
-    const { url, method } = req;
-    if (url === "/" || url === "") {
-      switch (method) {
-        case "GET":
-          renderForm(req);
-          break;
-        case "POST":
-          handleForm(req);
-          break;
-        default:
-          renderInvalidRouteError(req);
-          break;
-      }
-    } else {
-      renderInvalidRouteError(req);
+    switch (req.method) {
+      case "GET":
+        renderForm(req);
+        break;
+      case "POST":
+        handleForm(req);
+        break;
+      default:
+        renderInvalidRouteError(req);
+        break;
     }
   }
 };

@@ -5,8 +5,8 @@ services:
     build: .
     container_name: miniflux-sign-up
     environment:
-      - MINIFLUX_HOST=adfs
-      - AUTH_KEY=asdfsd
+      - MINIFLUX_HOST=
+      - AUTH_KEY=
       # - BASE_URL= optional
       # - HOST= optional
     ports:
